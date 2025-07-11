@@ -1,0 +1,95 @@
+@extends('adminlte::page')
+
+@section('title', 'Cupones')
+
+@section('content_header')
+    <h1 class="text-center text-primary font-weight-bold">Cupones</h1>
+@stop
+
+@section('content')
+<div class="card shadow-lg border-0">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+        <h3 class="card-title m-0">Cupones Registrados</h3>
+    </div>
+
+    <div class="card-body">
+        <form method="GET" action="{{ route('cupones.index') }}" class="mb-4 d-flex align-items-center gap-2">
+            <select name="tipo_cupon_id" class="form-control w-25">
+                <option value="">Todos los Tipos</option>
+                @foreach ($tiposCupon as $tipo)
+                    <option value="{{ $tipo->tipo_cupon_id }}" {{ request('tipo_cupon_id') == $tipo->tipo_cupon_id ? 'selected' : '' }}>
+                        {{ $tipo->descripcion }}
+                    </option>
+                @endforeach
+            </select>
+            <button type="submit" class="btn btn-info">Filtrar</button>
+        </form>
+
+        <table id="cupones-table" class="table table-hover table-bordered text-center">
+            <thead class="thead-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Código</th>
+                    <th>Inicio</th>
+                    <th>Expira</th>
+                    <th>Stock</th>
+                    <th>Cliente</th>
+                    <th>Tipo</th>
+                    <th>Estatus</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($cupones as $cupon)
+                <tr>
+                    <td>{{ $cupon->cupon_id }}</td>
+                    <td>{{ $cupon->codigo }}</td>
+                    <td>{{ $cupon->fecha_inicio }}</td>
+                    <td>{{ $cupon->fecha_expiracion }}</td>
+                    <td>{{ $cupon->stock }}</td>
+                    <td>{{ $cupon->cliente->name ?? 'Sin cliente' }}</td>
+                    <td>{{ $cupon->tipoCupon->descripcion ?? 'N/A' }}</td>
+                    <td>
+                        <span class="badge {{ $cupon->estatus_id == 1 ? 'badge-success' : 'badge-secondary' }}">
+                            {{ $cupon->estatus->nombre ?? 'N/A' }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{{ route('cupones.editar', $cupon->cupon_id) }}" class="btn btn-warning btn-sm">Editar</a>
+                        <form action="{{ route('cupones.eliminar', $cupon->cupon_id) }}" method="POST" style="display:inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('¿Estás seguro de eliminar este cupón?');">
+                                Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
+@stop
+
+@section('css')
+    <style>
+        .card {
+            border-radius: 10px;
+        }
+        .table {
+            background-color: #fff;
+        }
+        .table th {
+            background-color: #343a40;
+            color: #fff;
+        }
+        .btn {
+            border-radius: 5px;
+        }
+    </style>
+@stop
+
+@section('js')
+    <script>console.log("Página de cupones cargada correctamente.");</script>
+@stop
