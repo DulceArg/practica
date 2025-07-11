@@ -1,0 +1,109 @@
+@extends('adminlte::page')
+
+@section('title', 'Cupones')
+
+@section('content_header')
+<div class="content-header">
+    <h1 class="text-primary">Agregar Cupón</h1>
+</div>
+@stop
+
+@section('content')
+<div class="container mt-5">
+    <div class="card shadow-lg border-primary">
+        <div class="card-header bg-info text-white">
+            <h3 class="mb-0">Registrar Cupón</h3>
+        </div>
+        <div class="card-body">
+            
+            <form action="{{ route('cupones.guardar') }}" method="POST">
+                @csrf
+                <input type="hidden" name="cupon_id" value="{{ $cupon->cupon_id ?? '' }}">
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="codigo" class="form-label text-dark">Código del Cupón</label>
+                        <input type="text" class="form-control form-control-lg" id="codigo" name="codigo" value="{{ $cupon->codigo ?? '' }}" placeholder="Ej: TAMAL10">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="fecha_inicio" class="form-label text-dark">Fecha de Inicio</label>
+                        <input type="date" class="form-control form-control-lg" id="fecha_inicio" name="fecha_inicio" value="{{ $cupon->fecha_inicio ?? '' }}">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="fecha_expiracion" class="form-label text-dark">Fecha de Expiración</label>
+                        <input type="date" class="form-control form-control-lg" id="fecha_expiracion" name="fecha_expiracion" value="{{ $cupon->fecha_expiracion ?? '' }}">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="stock" class="form-label text-dark">Stock</label>
+                        <input type="number" class="form-control form-control-lg" id="stock" name="stock" value="{{ $cupon->stock ?? '' }}" placeholder="Cantidad disponible">
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="cliente_id" class="form-label text-dark">Cliente</label>
+                        <select name="cliente_id" id="cliente_id" class="form-control">
+                            @foreach($clientes as $cliente)
+                                <option value="{{ $cliente->id }}" {{ (isset($cupon) && $cupon->cliente_id == $cliente->id) ? 'selected' : '' }}>
+                                    {{ $cliente->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="tipo_cupon_id" class="form-label text-dark">Tipo de Cupón</label>
+                        <select name="tipo_cupon_id" id="tipo_cupon_id" class="form-control">
+                            @foreach($tiposCupon as $tipo)
+                                <option value="{{ $tipo->tipo_cupon_id }}" {{ (isset($cupon) && $cupon->tipo_cupon_id == $tipo->tipo_cupon_id) ? 'selected' : '' }}>
+                                    {{ $tipo->descripcion }} - {{ $tipo->porcentaje }}%
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="estatus_id" class="form-label text-dark">Estatus</label>
+                        <select name="estatus_id" id="estatus_id" class="form-control">
+                            @foreach($estatus as $estado)
+                                <option value="{{ $estado->id }}" {{ (isset($cupon) && $cupon->estatus_id == $estado->id) ? 'selected' : '' }}>
+                                    {{ $estado->nombre }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-info btn-lg">Guardar Cupón</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@stop
+
+@section('css')
+<style>
+    .card-header {
+        border-radius: 8px 8px 0 0;
+    }
+    .form-control-lg {
+        font-size: 1.2rem;
+        padding: 0.75rem;
+    }
+    .btn-info {
+        background-color: #17a2b8;
+        border-color: #17a2b8;
+    }
+    .btn-info:hover {
+        background-color: #138496;
+        border-color: #117a8b;
+    }
+</style>
+@stop
+
+@section('js')
+<script> console.log("Formulario de cupones listo."); </script>
+@stop
