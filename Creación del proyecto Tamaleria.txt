@@ -1,2 +1,0 @@
-composer create-project laravel/laravel tienda-tamales
-cd tienda-tamales
