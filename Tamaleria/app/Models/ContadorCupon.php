@@ -16,6 +16,7 @@ class ContadorCupon extends Model
         'usuario_id',
         'tipo_cupon_id',
         'cupon_id',
+        'orden_id',
         'total_cupones',
         'fecha_actualizacion',
     ];
@@ -34,5 +35,10 @@ class ContadorCupon extends Model
     public function cupon()
     {
         return $this->belongsTo(Cupon::class, 'cupon_id', 'cupon_id');
+    }
+
+    public function orden()
+    {
+        return $this->belongsTo(Orden::class, 'orden_id', 'orden_id');
     }
 }
