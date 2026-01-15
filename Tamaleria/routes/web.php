@@ -53,6 +53,11 @@ Route::get('/ver-cupones', [CuponUsuarioController::class, 'index'])->name('usua
 // Página protegida con sesión (usuario logueado)
 Route::get('/cupones-sesion', [CuponUsuarioController::class, 'cuponesConSesion'])->name('usuario.cupones.sesion');
 
+// Página para ver el historial de cupones
+Route::get('/historial-cupones', [CuponUsuarioController::class, 'historial'])->name('historial.cupones');
+
+
+
 
 // =======================
 // REGISTRO DE USUARIOS
