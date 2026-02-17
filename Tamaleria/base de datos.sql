@@ -1,3 +1,8 @@
+/*
+E   structura SQL no copiar en postgres, ya las crean las migraciónes
+
+*/
+
 -- Tabla de roles
 CREATE TABLE rol (
     rol_id SERIAL PRIMARY KEY,
@@ -8,6 +13,9 @@ CREATE TABLE rol (
 INSERT INTO rol (nombre_rol, descripcion_rol) VALUES 
 ('Administrador', 'Rol encargado de la administración y gestión de la tamalería'),
 ('Usuario', 'Rol encargado de la compra de productos de la tamalería');
+
+
+
 
 -- Tabla de usuarios
 CREATE TABLE usuario (
@@ -63,7 +71,7 @@ CREATE TABLE cupon (
     estatus_id INT REFERENCES estatus(estatus_id)
 );
 
--- Tabla de órdenes
+-- Tabla de órdenes (ESTA MAL, BASATE DE LAS MIGRACIÓNES)
 CREATE TABLE ordenes (
     orden_id SERIAL PRIMARY KEY,
     fecha_orden DATE,
